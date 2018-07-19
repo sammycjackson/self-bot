@@ -167,7 +167,7 @@ class Utility:
             if Type == "playing":
                 await self.bot.change_presence(status=stats[status], activity=discord.Game(name=message), afk = True)
             elif Type == "streaming":
-                await self.bot.change_presence(status=stats[status], activity=discord.Streaming(name=message, url=f'https://twitch.com/%7Bmessage%7D'), afk = True)
+                await self.bot.change_presence(status=stats[status], activity=discord.Streaming(name=message, url=f'https://twitch.com/{Bmessage}D'), afk = True)
             elif Type == "listeningto":
                 await self.bot.change_presence(status=stats[status], activity=discord.Activity(type=discord.ActivityType.listening, name=message), afk = True)
             elif Type == "watching":
