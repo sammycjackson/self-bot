@@ -200,7 +200,7 @@ class Utility:
             self._last_embed = params
         except:
             await ctx.send('Improperly formatted embed!')
-
+    url = f'https://twitch.tv/{message}'
     @commands.command(pass_context=True)
     async def wiki(self, ctx, *, search: str = None):
         '''Wikipedia results'''
