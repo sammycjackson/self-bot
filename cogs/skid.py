@@ -20,7 +20,7 @@ from mtranslate import translate
 from io import BytesIO
 import string
 import colorsys
-import matplotlib
+
 
 class skid: 
      def __init__(self, bot):
