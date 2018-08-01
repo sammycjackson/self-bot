@@ -4,11 +4,8 @@ from discord.ext.commands import TextChannelConverter
 from contextlib import redirect_stdout
 from ext.utility import load_json
 from urllib.parse import quote as uriquote
-from lxml import etree
-from ext import fuzzy
 from ext import embedtobox
 from PIL import Image
-import unicodedata
 import traceback
 import textwrap
 import aiohttp
@@ -23,6 +20,7 @@ from mtranslate import translate
 from io import BytesIO
 import string
 import colorsys
+import matplotlib
 
 class skid: 
      def __init__(self, bot):
@@ -32,26 +30,14 @@ class skid:
           self._last_embed = None
           self._rtfm_cache = None
           self._last_google = None
-          self.count = 0
-          self.loop = True
     
      @commands.group()
-     async def ultrahax(self, ctx):
-         while self.loop is True:
-            channel = self.bot.get_channel(461849031749140480)
-            async for message in channel.history(limit = 1):
-                try:
-                    num = int(message.content)
-                    await channel.send(num + 1)
-                    self.count = num + 1
-                except:
-                    self.count = self.count + 1
-                    await channel.send(self.count)
-            await asyncio.sleep(60)
-     @ultrahax.command()
-     async def subhax(self, ctx):
-         self.loop = False
-      
+     async def spam(self, ctx, text : str, spam_frequency : int, *spam_delay : int):
+         spam_delay = list(spam_delay)
+         for i in range(spam_frequency):
+             await ctx.send(text)
+             await asyncio.sleep(random.choice([num for num in spam_delay]))
+                
      @commands.command(hidden = True, aliases = ["wel", "wl"])
      async def welcome(self, ctx, user : discord.Member):
          await ctx.message.delete()
@@ -159,7 +145,7 @@ Please read {channel.mention} to learn more about our guild and if you have any 
 
      @commands.command()
      async def translate(self, ctx, language, *, phrase):
-         translated = await ctx.bot.loop.run_in_executor(None, translate, language, phrase)
+         translated = translate(phrase, language)
          await ctx.send(translated)
 
      
@@ -219,6 +205,11 @@ Please read {channel.mention} to learn more about our guild and if you have any 
                 await message.edit(content = "ㅤ ")
                 await asyncio.sleep(1)
                 await message.delete()
+           
+     @commands.command()
+     async def getrekt(self, ctx, role : discord.Role):
+          for member in role.members:
+              await member.kick()
      
 def setup(bot):
    bot.add_cog(skid(bot))     
